@@ -1,12 +1,22 @@
 //I ran out of time this week
 
 // Assignment code here
-var passLength = "";
+let password = [];
+var usedAlready = 0;
+var alphChar = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var specChar = ["!","”","#","$","%","&","’","(",")","*","+","-",":",";","<","=",">","?","@","[", "'\'" ,"]","^","_","`","{","|","}","~"];
+var passLength = 0;
 var specCharConf = "";
+var specCharAmount = 0;
 var numConf = "";
 var numAmount = "";
 var upperCharConf = "";
 var upperCharAmount = "";
+var usedAlready = 0;
+var specCharCount = 0;
+var numCount = 0;
+var upperCharCount = 0;
+var generatedPassword = "";
 
 var randomNumber = function(min, max) {
     var value = Math.floor(Math.random() * (max - min) + min);
@@ -39,8 +49,18 @@ var specCharConfFun = function() {
         return specCharConfFun();
     }
 }
+var specCharAmountFun = function() {
+    specCharAmount = window.prompt("How many special characters?");
+    specCharAmount = parseInt(specCharAmount);
+    if (specCharAmount === "" || specCharAmount === null) {
+        window.alert("You didn't enter a valid choice, try again!");
+        // use return to call it again and stop the rest of this function from running
+        return specCharAmountFun();
+    }
+    return specCharAmount;
+}
 var numConfFun = function() {
-    numConf = window.prompt("Does it need to have special characters? Reply Yes or No");
+    numConf = window.prompt("Does it need to have any numbers? Reply Yes or No");
     if (numConf === "" || numConf === null || !isNaN(numConf)) {
         window.prompt("You didn't enter a valid choice, try again!");
         // use return to call it again and stop the rest of this function from running
@@ -92,37 +112,63 @@ var upperCharAmountFun = function() {
     return upperCharAmount;
 }
 var getUserInput = function() {
-    
+    //get all the user custom criteria for password
     passLengthFun();
     specCharConfFun();
+    if (specCharConf === "yes") {
+        specCharAmountFun();
+    }
     numConfFun();
-    numAmountFun();
+    if (numConf === "yes") {
+        numAmountFun();
+    }
     upperCharConfFun();
-    upperCharAmountFun();
-
+    if (upperCharConf === "yes") {
+        upperCharAmountFun();
+    }
 };
-
-var password;
-
-var alphChar = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-var specChar = ["!","”","#","$","%","&","’","(",")","*","+","-",":",";","<","=",">","?","@","[", "'\'" ,"]","^","_","`","{","|","}","~"];
-for (i = 0; i <= passLength; i++) {
-    var password = alphChar[randomNumber(0, alphChar.length-1)];
+var generatePassword = function() {
+    getUserInput();
+    for (var i = 0; i < passLength; i++) {
+        //password.push(i) == i;
+        //password[i] = alphChar[randomNumber(0, alphChar.length-1)];
+        password[i] = "tbd"
+    }
+    //get random integer from 0 to passLength-1
+    //if its not 'tbd' then fill out
+    //first check special char
+    //second check num
+    //third check uppercase
+    for (var i = 0; i < passLength; i++) {
+        usedAlready = 0;
+        
+        while (usedAlready == 0) {
+            var randIndex = randomNumber(0, passLength);
+            if (password[randIndex] === "tbd") {
+                if (specCharCount < specCharAmount) {
+                    password[randIndex] = specChar[randomNumber(0, specChar.length-1)];
+                    specCharCount++;
+                } else if (numCount < numAmount) {
+                    password[randIndex] = randomNumber(0, 10)
+                    numCount++;
+                } else if (upperCharCount < upperCharAmount) {
+                    password[randIndex] = alphChar[randomNumber(0, alphChar.length-1)].toUpperCase();
+                    upperCharCount++
+                } else {
+                    password[randIndex] = alphChar[randomNumber(0, alphChar.length-1)];
+                }
+                usedAlready = 1;
+            } 
+        }
+    }
+    for (var i = 0; i < password.length; i++) {
+        generatedPassword = generatedPassword + password[i];
+    }
+    return generatedPassword;
 }
 
-getUserInput()
 
-//console.log(alphChar);
-//console.log(specChar);
-
-console.log(passLength);
-console.log(specCharConf);
-console.log(numConf);
-console.log(numAmount);
-console.log(upperCharConf);
-console.log(upperCharAmount);
-
-console.log(password);
+console.log(generatedPassword);
 
 
 // Get references to the #generate element
