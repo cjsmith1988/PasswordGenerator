@@ -61,4 +61,7 @@ WHEN the password is generated
 THEN the password is either displayed in an alert or written to the page
 
 
-![Password Generator Screen Shot](cjsmith1988/PasswordGenerator/blob/main/PasswordGeneratorScreenGrab.PNG)
+
+![alt text](https://github.com/cjsmith1988/PasswordGenerator/blob/main/PasswordGeneratorScreenGrab.PNG?raw=true)
+
+
