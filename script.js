@@ -128,6 +128,7 @@ var getUserInput = function() {
     }
 };
 var generatePassword = function() {
+    generatedPassword = "";
     getUserInput();
     for (var i = 0; i < passLength; i++) {
         //password.push(i) == i;
